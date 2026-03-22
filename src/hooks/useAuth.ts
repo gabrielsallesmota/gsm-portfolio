@@ -37,7 +37,7 @@ export function useAuth() {
       body.set('username', email);
       body.set('password', password);
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8001'}/auth/login`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://api.gabrielmotadev.com.br'}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body,
