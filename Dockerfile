@@ -20,17 +20,18 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Install serve to serve static files
+RUN npm install -g serve
+
 # Copy built app from builder
-COPY --from=builder /app/dist /app/dist
-
-# Copy package files for production dependencies
-COPY package*.json ./
-
-# Install only production dependencies
-RUN npm ci --only=production
+COPY --from=builder /app/dist ./dist
 
 # Expose port
 EXPOSE 5173
 
-# Start the app
-CMD ["npm", "run", "preview"]
+# Create a simple health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD node -e "require('http').get('http://127.0.0.1:5173', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+
+# Serve the static build on all interfaces
+CMD ["serve", "-s", "dist", "-l", "5173"]
