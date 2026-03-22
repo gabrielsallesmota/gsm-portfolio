@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8001';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api.gabrielmotadev.com.br';
 const TOKEN_KEY = 'gsm-portfolio-token';
 
 type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
